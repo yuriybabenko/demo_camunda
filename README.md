@@ -1,7 +1,7 @@
 ### About
 
 This is a Python application utilizing the FastAPI framework, Python
-modules, and Python's built-in SQLite database engine. 
+modules, and Python's built-in SQLite database engine.
 
 Application can be accessed at http://0.0.0.0:8000/, which will show a
 basic UI to interact with the API. 

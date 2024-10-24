@@ -1,3 +1,5 @@
+# pycache
+__pycache__
 # sqlite databases
 *.db
 # static assets
