@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <title>Camunda Demo 1</title>
+    </head>
+
+    <body>
+        <h1>Camunda Demo</h1>
+
+        <hr />
+
+        <h3>Request new images</h3>
+        <form onsubmit="return getImages(this)" id="get-images-form">
+            <table>
+                <tr>
+                    <td><label for="source">Image source:</label></td>
+                    <td>
+                        <select name="source" required>
+                            <option value="place_bear">Place Bear</option>
+                            <option value="place_dog">Place Dog</option>
+                            <option value="random_duck">Random Duck</option>
+                            <option value="random_fox">Random Fox</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="quantity">Quantity:</label></td>
+                    <td><input type="number" name="quantity" min="1" max="5" value="1" required /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="submit" value="Submit" /></td>
+                </tr>
+            </table>
+        </form>
+
+        <hr />
+
+        <h3>Show last image</h3>
+        <form onsubmit="return showLastImage(this)" id="show-last-image-form">
+            <input type="submit" value="Submit" />
+        </form>
+
+        <div id="response"></div>
+
+        <script>
+            // Submit callback for #get-images-form
+            function getImages(form) {
+                fetch('/image/' + form.source.value + '/' + form.quantity.value, {
+                    headers: { "Content-Type": "application/html" },
+                    method: "GET"
+                })
+                .then(data => data.json())
+                .then((response) => {
+                    if (response.images) {
+                        cleanup();
+
+                        // Create an <img> element from each returned image path.
+                        response.images.forEach(path => {
+                            showImage(path);
+                        })
+                    }
+                });
+
+                return false;
+            }
+
+            // Submit callback for #show-last-image-form
+            function showLastImage(form) {
+                fetch('/last-image/', {
+                    headers: { "Content-Type": "application/html" },
+                    method: "GET"
+                })
+                .then(data => data.json())
+                .then((response) => {
+                    cleanup();
+
+                    if (!response.image) {
+                        document.getElementById('response').innerHTML = 'No last image available.';
+                        return;
+                    }
+
+                    showImage(response.image);
+                });
+
+                return false;
+            }
+
+            // Removes any potential content from previous responses.
+            function cleanup() {
+                // Ensure we're starting with a clean slate.
+                document.getElementById('response').innerHTML = '';
+            }
+
+            // Creates an <img> element for given image path and populates it into response element.
+            function showImage(path) {
+                const image = document.createElement('img');
+                image.setAttribute('src', path);
+
+                document.getElementById('response').appendChild(image);
+            }
+        </script>
+    </body>
+</html>

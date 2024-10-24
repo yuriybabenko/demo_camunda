@@ -1,0 +1,8 @@
+# sqlite databases
+*.db
+# static assets
+assets/*
+# OSX files
+.DS_Store
+# PHP Storm
+.idea
