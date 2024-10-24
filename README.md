@@ -3,8 +3,16 @@
 This is a Python application utilizing the FastAPI framework, Python
 modules, and Python's built-in SQLite database engine.
 
-Application can be accessed at http://0.0.0.0:8000/, which will show a
+Application can be accessed at http://127.0.0.0:8000/, which will show a
 basic UI to interact with the API. 
+
+### Setup
+
+1. Install Docker and Docker compose. Ensure Docker daemon is running.
+2. Using a terminal of your choice, change directory to `demo_camunda` from the archive:
+   `cd demo_camunda`.
+3. Run `docker-compose up -d`.
+4. In your web browser, access the application at http://127.0.0.1:8000.
 
 ### API
 
